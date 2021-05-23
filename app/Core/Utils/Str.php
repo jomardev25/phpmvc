@@ -101,7 +101,7 @@ class Str
         return $string;
     }
     
-    public static function singularize( $string )
+    public static function singularize(string $string )
     {
         if (in_array(strtolower($string), self::$uncountable))
             return $string;
@@ -149,5 +149,43 @@ class Str
         }
 
         return false;
+    }
+
+    public static function lower($value)
+    {
+        return mb_strtolower($value, 'UTF-8');
+    }
+
+    public static function snake($value, $delimiter = '_')
+    {
+        if (!ctype_lower($value)) {
+            $value = preg_replace('/\s+/u', '', ucwords($value));
+            $value = static::lower(preg_replace('/(.)(?=[A-Z])/u', '$1'.$delimiter, $value));
+        }
+
+        return $value;
+    }
+
+    public static function replaceArray($search, array $replace, $subject)
+    {
+        foreach ($replace as $value) {
+            $subject = static::replaceFirst($search, $value, $subject);
+        }
+
+        return $subject;
+    }
+
+     public static function replaceFirst($search, $replace, $subject)
+    {
+        if ($search == "")
+            return $subject;
+
+        $position = strpos($subject, $search);
+
+        if ($position !== false) {
+            return substr_replace($subject, $replace, $position, strlen($search));
+        }
+
+        return $subject;
     }
 }

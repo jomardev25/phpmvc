@@ -59,4 +59,14 @@ class Arr
 
         return array_key_exists($key, $array);
     }
+
+    public static function flatten($array)
+    {
+        if(count($array) == 0)
+            return $array;
+    
+        $array = call_user_func_array('array_merge_recursive', $array);
+        $array = reset($array);
+        return $array;
+    }
 }

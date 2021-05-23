@@ -4,9 +4,9 @@ namespace App\Core\Contracts;
 
 use App\Core\Http\Response;
 
-interface ResponseInterface
+interface DatabaseInterface
 {
-    public function view(string $view, array $data = [], int $status = Response::HTTP_OK, array $headers = []);
+    public function getConnection
 
     public function json(array $data = [], int $status = Response::HTTP_OK, array $headers = []);
 

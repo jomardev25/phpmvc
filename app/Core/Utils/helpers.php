@@ -1,8 +1,38 @@
 <?php
+
+use App\Core\Hash;
+use App\Core\Session;
+use App\Core\Csrf;
+use App\Core\Http\Response;
 use App\Core\Utils\Str;
 
-if (!function_exists("env")) {
+if (! function_exists("abort")) {
+    function abort($statusCode, array $headers = []){
+        $response = new Response($statusCode, $headers);
+        $response->sendHeaders();
+        exit;
+    }
+}
 
+if (!function_exists("asset")){
+    function asset($asset){
+        return base_url().$asset;
+    }
+}
+
+if (!function_exists("base_url")){
+    function base_url(){
+        return config("app.url");
+    }
+}
+
+if (!function_exists("bycrypt")){
+    function bycrypt($value){
+        return Hash::make($value);
+    }
+}
+
+if (!function_exists("env")){
     function env($key, $default = null){
         $value = getenv($key); 
         if ($value === false) {
@@ -32,6 +62,13 @@ if (!function_exists("env")) {
     }
 }
 
+if (!function_exists("class_basename")) {
+    function class_basename($class) {
+        $class = is_object($class) ? get_class($class) : $class;
+        return basename(str_replace("\\", "/", $class));
+    }
+}
+
 if (!function_exists("config")) {
     function config($key = null, $default = null){
         $configValue = null;
@@ -47,14 +84,51 @@ if (!function_exists("config")) {
                 throw new \RuntimeException(sprintf('Config file "%s" not in config folder', $file));
 
             $arr = include $file;
-            //$config = array_slice($config, 1);
-
-            $configValue = \App\Core\Utils\Arr::get($arr, "default.connections.mysql.driver");
-            print_r($configValue);
-            //$configValue = isset($arr[$confifKey]) ? $arr[$confifKey] : $default;
+            $config = array_slice($config, 1);
+            $configValue = isset($arr[$confifKey]) ? $arr[$confifKey] : $default;
         }
        
         return  $configValue;
+    }
+}
+
+if (! function_exists('csrf_field')) {
+    function csrf_field() {
+        echo '<input type="hidden" name="_token" value="'.csrf_token().'">';
+    }
+}
+
+if(!function_exists("csrf_token")){
+    function csrf_token(){
+        Session::start();
+        return Csrf::token();
+    }
+}
+
+if (!function_exists("redirect")) {
+    function redirect(string $location){
+        $baseURL = base_url().$location;
+        header("location: $baseURL");
+        exit;
+    }      
+}
+
+if (!function_exists("route")){
+    function route($route, array $routeParams = []){
+        
+        if(count($routeParams) === 0)
+            return base_url().$route;
+
+        $parameters = "/".implode("/", $routeParams);
+        return base_url().$route.$parameters;
+
+    }
+}
+
+if (!function_exists("format_date")) {
+    function format_date($date, $format = "Y-m-d"){
+        $formattedDate = DateTime::createFromFormat("Y-m-d", $date);
+        return $formattedDate->format($format);
     }
 }
 
@@ -95,5 +169,20 @@ if (!function_exists("secured_decrypt")) {
             return $data;
 
         return false;
+    }
+}
+
+
+if(!function_exists('session')){
+    function session($key = null){
+        if (is_null($key)) {
+            return Session::getInstance();
+        }
+
+        if (is_array($key)) {
+            return Session::set($key[0], $key[1]);
+        }
+
+        return Session::get($key);
     }
 }

@@ -7,7 +7,7 @@ class View
     private $viewDirPath = "../resources/views/";
 
     public function render($view, array $data = [])
-    {   
+    {
         extract($data);
         require $this->viewDirPath.$this->getViewPath($view).".php";
     }
