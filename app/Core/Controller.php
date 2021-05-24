@@ -16,6 +16,7 @@ abstract class Controller implements ControllerInterface
     protected $hasFooter = true;
     protected $header = "layout.header";
     protected $footer = "layout.footer";
+    protected $routeMethods = [];
 
     public function __construct()
     {
@@ -27,6 +28,13 @@ abstract class Controller implements ControllerInterface
     public function request()
     {
         return $this->request->getRequest();
+    }
+
+    public function method(string $routeMethod)
+    {
+        if($this->request->getRequestMethod() !== strtoupper($routeMethod)){
+            abort(\App\Core\Http\Response::HTTP_METHOD_NOT_ALLOWED);
+        }
     }
 
     public function view(string $view, array $data = [], int $status = Response::HTTP_OK, array $headers = [])
@@ -60,6 +68,29 @@ abstract class Controller implements ControllerInterface
         $this->hasFooter = false;
         return $this;
     }
+
+    public function routeMethods(array $routeMethods = [])
+    {
+        if(count($routeMethods) === 0)
+            return;
+
+        $segments = $this->request->segments();
+        $method = $this->request->getRequestMethod();
+        if(count($segments) === 1){
+            $requestedRoute = "index";
+        }else{
+            $requestedRoute = $segments[1];
+        }
+        
+        if(!isset($routeMethods[$requestedRoute]))
+            return;
+
+        if( $method !== strtoupper($routeMethods[$requestedRoute])){
+            abort(\App\Core\Http\Response::HTTP_METHOD_NOT_ALLOWED);
+        }
+        
+    }
+
 
     private function getHeader()
     {

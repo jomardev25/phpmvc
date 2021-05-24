@@ -5,9 +5,11 @@ namespace App\Core\Http;
 class Request
 {
     protected $request = [];
+    private $url = [];
 
     public function __construct()
     {
+        $this->getSegmentUrl();
         $this->fileInputs();
         $this->inputs();
     }
@@ -24,7 +26,7 @@ class Request
 
     public function getRequestMethod()
     {
-        return $_SERVER["REQUEST_METHOD"];
+        return strtoupper($_SERVER["REQUEST_METHOD"]);
     }
 
     private function fileInputs()
@@ -74,5 +76,27 @@ class Request
     public function all()
     {
         return $this->request;
+    }
+
+    private function getSegmentUrl()
+    {
+        $url = isset($_GET["url"]) ? $_GET["url"] : null;
+        $url = rtrim($url, "/");
+        $url = filter_var($url, FILTER_SANITIZE_URL);
+        $this->url = explode("/", $url);
+    }
+
+    public function segments()
+    {
+        return $this->url;
+    }
+
+    public function segment(int $segment)
+    {
+        $segmentUrl = null;
+        if(isset($this->url[$segment])){
+            $segmentUrl = $this->url[$segment];
+        }
+        return  $segmentUrl;
     }
 }

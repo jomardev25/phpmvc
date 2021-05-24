@@ -1,0 +1,32 @@
+// Theme Colors
+// -------------------------
+
+$color-primary : #ffde00;
+$color-secondary : #333;
+$color-black-light :#55595c;
+$color-gray-dark: #ddd;
+$color-gray-light: #f8f8f8;
+$color-login-bg-color-overlay: rgba(38, 50, 56, .6);
+$white: #fff;
+
+$base-font-family : 'Roboto',
+sans-serif;
+$base-font-color : lighten($color-secondary, 15%);
+$heading-font-color : $color-secondary;
+$font-family-base : $base-font-family;
+
+$font-size-base: 1rem;
+$font-size-section-title : 1.25rem;
+$font-size-semi-section-title : 1.1rem;
+$font-size-page-title : 1.5rem;
+
+$x-small-breakpoint : 480px;
+$x-small-breakpoint-below : $x-small-breakpoint - 1px;
+$small-breakpoint : 768px;
+$small-breakpoint-below : $small-breakpoint - 1px;
+$medium-breakpoint : 992px;
+$medium-breakpoint-below : $medium-breakpoint - 1px;
+$large-breakpoint : 1200px;
+$large-breakpoint-below : $large-breakpoint - 1px;
+$x-large-breakpoint : 1800px;
+$x-large-breakpoint-below : $x-large-breakpoint - 1px;

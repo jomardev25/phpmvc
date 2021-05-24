@@ -1,0 +1,70 @@
+.btn {
+    &.btn-pressable:active {
+        transform: translate(0px, 3px);
+        -webkit-transform: translate(0px, 3px);
+    }
+
+    font-family: $base-font-family;
+}
+
+.btn:focus,
+.btn.focus,
+.btn:active:focus,
+.btn:active.focus,
+.btn.active:focus,
+.btn.active.focus {
+    outline: none;
+}
+
+.btn-default {
+    border: 1px solid $color-gray-dark;
+    background-color: $white;
+
+    &:hover,
+    &:active,
+    &:focus {
+        background-color: $color-gray-light;
+    }
+}
+
+.btn-outline-default {
+    border: 1px solid $color-gray-dark;
+    background-color: $white;
+
+    &:hover,
+    &:active,
+    &:focus {
+        background-color: $color-gray-light;
+    }
+}
+
+.btn-theme {
+    @include button-variant($color-secondary, $color-primary, $color-primary);
+}
+
+.btn-outline-theme {
+    @include button-outline-variant($color-primary);
+}
+
+.btn-rounded {
+    border-radius: 20px;
+}
+
+.btn i {
+    width: 1.2em;
+    text-align: left;
+}
+
+.btn-icon {
+    padding: 0.6rem;
+    line-height: 1em;
+
+    i {
+        text-align: center;
+    }
+}
+
+.btn-xs {
+    font-size: 12px;
+    padding: 3px 10px;
+}

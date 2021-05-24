@@ -4,6 +4,7 @@
 
 namespace Bootstrap;
 
+use App\Core\Http\Request;
 use App\Core\DotEnv;
 use App\Core\Utils\Str;
 
@@ -39,11 +40,8 @@ class App{
 
     private function getUrl()
     {
-        $url = isset($_GET["url"]) ? $_GET["url"] : null;
-        $url = rtrim($url, "/");
-        $url = filter_var($url, FILTER_SANITIZE_URL);
-        $url = explode("/", $url);
-        $this->url = $url;
+        $request = new Request();
+        $this->url = $request->segments();
     }
 
     private function defaultController()

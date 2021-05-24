@@ -1,0 +1,134 @@
+.login-page {
+
+    .login-wrapper {
+        height: 100vh;
+        padding-top: 0;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &::before {
+            background-position: center top;
+            background-size: cover;
+            content: '';
+            height: 100%;
+            left: 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: -1;
+        }
+
+        &::after {
+            background-color: $color-login-bg-color-overlay;
+            content: '';
+            height: 100%;
+            left: 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: -1;
+        }
+    }
+
+    .login-box {
+        color: $white;
+        padding: 20px;
+        width: 100%;
+        max-width: 400px;
+
+        .form-control {
+            margin-top: 20px;
+        }
+
+        .other-actions {
+            margin-bottom: 10px;
+            margin-top: 20px;
+        }
+
+        .page-copyright {
+            font-size: 14px;
+            margin-top: 50px;
+            text-align: center;
+
+            p {
+                margin-bottom: 10px;
+            }
+        }
+
+        a {
+            color: $color-primary;
+
+            &:hover {
+                color: darken($color-primary, 5%);
+            }
+        }
+
+        .btn-login {
+            background-color: $color-primary;
+            color: $color-secondary;
+
+            &:hover {
+                background-color: darken($color-primary, 5%);
+            }
+        }
+
+    }
+
+    .login-box .c-input {
+        color: #fff;
+
+        .c-indicator {
+            top: 2px;
+        }
+    }
+
+    .login-wrapper .c-input {
+
+        >input {
+
+            &:checked~.c-indicator {
+                background-color: #333;
+                @include box-shadow(none);
+            }
+
+            &:focus~.c-indicator {
+                // the mixin is not used here to make sure there is feedback
+                box-shadow: 0 0 0 .075rem #fff, 0 0 0 .2rem darken(#333, 5%);
+                ;
+            }
+
+            &:active~.c-indicator {
+                background-color: darken(#333, 5%);
+                @include box-shadow(none);
+            }
+        }
+
+    }
+
+    .logo-main {
+        margin-bottom: 4rem;
+        text-align: center;
+
+        img {
+            height: auto;
+            width: 30rem;
+        }
+
+    }
+
+    @media (max-width: $small-breakpoint) {
+
+        .other-actions {
+            font-size: 1.4rem;
+        }
+
+        .logo-main {
+            img {
+                height: auto;
+                max-width: 100%;
+            }
+        }
+    }
+}
