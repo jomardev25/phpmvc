@@ -1,1 +1,1 @@
-# phpmvc
+# Simple MVC Framework using PHP
